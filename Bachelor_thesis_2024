@@ -1,0 +1,129 @@
+### Box plot to show the efficiency of Golden Gate with G and N
+
+import matplotlib.pyplot as plt
+
+# Data ALL the reactions with G and selected with N
+insert_with_N = [10, 41, 11, 24, 48, 10]
+insert_with_G = [104, 164, 29, 117, 223]
+
+data = [insert_with_G, insert_with_N]
+labels = ['Insert with G', 'Insert with N']
+
+# Define colors
+colors = ['pink', 'lightgreen']
+
+# Create box plot
+plt.figure(figsize=(6, 6))
+bp = plt.boxplot(data, labels=labels, patch_artist=True, widths=0.5)  # Adjust width here
+
+# Change box colors
+for patch, color in zip(bp['boxes'], colors):
+    patch.set_facecolor(color)
+
+plt.grid(True)
+plt.tight_layout()
+
+# Show plot
+plt.show()
+
+### Statistics for the Golden Gate experiments (based on colony counts)
+import statistics
+
+insert_with_N = [10, 41, 11, 24, 48, 10]
+insert_with_G = [104, 164, 29, 117, 223]
+
+
+# Mean
+mean_N = statistics.mean(insert_with_N)
+mean_G = statistics.mean(insert_with_G)
+
+
+# Standard deviation
+std_dev_N = statistics.stdev(insert_with_N)
+std_dev_G = statistics.stdev(insert_with_G)
+
+# Median
+median_N = statistics.median(insert_with_N)
+median_G = statistics.median(insert_with_G)
+
+# Minimum
+min_N = min(insert_with_N)
+min_G = min(insert_with_G)
+
+# Maximum
+max_N = max(insert_with_N)
+max_G = max(insert_with_G)
+
+# Range
+range_N = max(insert_with_N) - min(insert_with_N)
+range_G = max(insert_with_G) - min(insert_with_G)
+
+# Printing the results
+print("Statistics for insert_with_N:")
+print("Mean:", mean_N)
+print("Standard Deviation:", std_dev_N)
+print("Median:", median_N)
+print("Minimum:", min_N)
+print("Maximum:", max_N)
+print("Range:", range_N)
+print()
+
+print("Statistics for insert_with_G:")
+print("Mean:", mean_G)
+print("Standard Deviation:", std_dev_G)
+print("Median:", median_G)
+print("Minimum:", min_G)
+print("Maximum:", max_G)
+print("Range:", range_G)
+print()
+
+
+
+### Statistical difference between experiments 1,2 and 3 for G
+from scipy.stats import mannwhitneyu
+
+# Colony counts for Group G in Experiment 1 and 2
+group_g_exp1_2 = [104, 164, 29]
+
+# Colony counts for Group G in Experiment 3
+group_g_exp3 = [117, 223]
+
+# Perform Mann-Whitney U test
+statistic, p_value = mannwhitneyu(group_g_exp1_2, group_g_exp3, alternative='two-sided')
+
+# Print the results
+print("Mann-Whitney U test:")
+print("Statistic:", statistic)
+print("p-value:", p_value)
+
+# Interpret the results
+alpha = 0.05
+if p_value < alpha:
+    print("Reject the null hypothesis: There is a significant difference in colony counts between Group G in Experiment 1 and 2 and Experiment 3.")
+else:
+    print("Fail to reject the null hypothesis: There is no significant difference in colony counts between Group G in Experiment 1 and 2 and Experiment 3.")
+
+
+
+### Statistical difference between experiments 1,2 and 3 for N
+# Colony counts for Group N in Experiment 1 and 2
+group_n_exp1_2 = [10, 41]
+
+# Colony counts for Group N in Experiment 2
+group_n_exp3 = [11, 24, 48, 10]
+
+# Perform Mann-Whitney U test
+statistic, p_value = mannwhitneyu(group_n_exp1_2, group_n_exp3, alternative='two-sided')
+
+# Print the results
+print("Mann-Whitney U test:")
+print("Statistic:", statistic)
+print("p-value:", p_value)
+
+# Interpret the results
+alpha = 0.05
+if p_value < alpha:
+    print("Reject the null hypothesis: There is a significant difference in colony counts between Group N in Experiment 1 and 2 and Experiment 3.")
+else:
+    print("Fail to reject the null hypothesis: There is no significant difference in colony counts between Group N in Experiment 1 and Experiment 2.")
+
